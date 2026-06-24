@@ -1,0 +1,69 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
+  <diagram name="Page-1" id="3sWlYU6C_I_e_BE89se-">
+    <mxGraphModel dx="969" dy="724" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0X3RTglld2yT5DBF_XFR-6" edge="1" parent="1" source="0X3RTglld2yT5DBF_XFR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=DM Sans 14pt;" target="0X3RTglld2yT5DBF_XFR-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;" value="Document" vertex="1">
+          <mxGeometry height="80" width="80" x="40" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-8" edge="1" parent="1" source="0X3RTglld2yT5DBF_XFR-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=DM Sans 14pt;" target="0X3RTglld2yT5DBF_XFR-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-9" edge="1" parent="1" source="0X3RTglld2yT5DBF_XFR-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=DM Sans 14pt;" target="0X3RTglld2yT5DBF_XFR-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-10" edge="1" parent="1" source="0X3RTglld2yT5DBF_XFR-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=DM Sans 14pt;" target="0X3RTglld2yT5DBF_XFR-11">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="350" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-5" parent="1" style="whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;rounded=0;" value="MOCR model" vertex="1">
+          <mxGeometry height="80" width="120" x="160" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-7" parent="1" style="whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;rounded=0;" value="Layout Info&lt;div&gt;Bounding Boxes&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="320" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-11" parent="1" style="whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;rounded=0;" value="OCR Text" vertex="1">
+          <mxGeometry height="60" width="120" x="320" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=DM Sans 14pt;" value="Note: the output of the model is likely just one JSON file, which contains all the different types of information combined." vertex="1">
+          <mxGeometry height="30" width="190" x="285" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=DM Sans 14pt;" value="Element Types" vertex="1">
+          <mxGeometry height="30" width="160" x="520" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;" value="Text Blocks" vertex="1">
+          <mxGeometry height="40" width="160" x="520" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;" value="Titles/Subtitles" vertex="1">
+          <mxGeometry height="40" width="160" x="520" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;" value="Page Info in Margins (pg#, section names, etc)" vertex="1">
+          <mxGeometry height="40" width="160" x="520" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;" value="Raster Images" vertex="1">
+          <mxGeometry height="40" width="160" x="520" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;" value="Diagrams" vertex="1">
+          <mxGeometry height="40" width="160" x="520" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;" value="Visual Data&amp;nbsp;&lt;div&gt;(charts, graphs)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="160" x="520" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;" value="Tables" vertex="1">
+          <mxGeometry height="40" width="160" x="520" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-23" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;" value="Math" vertex="1">
+          <mxGeometry height="40" width="160" x="520" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="0X3RTglld2yT5DBF_XFR-24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=DM Sans 14pt;" value="Compound Blocks (Comments, Asides, Captions)" vertex="1">
+          <mxGeometry height="60" width="160" x="520" y="570" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
