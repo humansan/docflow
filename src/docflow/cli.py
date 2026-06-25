@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import sys
 
-from .convert import convert
+from .convert import convert_path
 from .preprocess import DEFAULT_DPI
 
 
@@ -16,7 +16,7 @@ def main(argv: list[str] | None = None) -> int:
     c = sub.add_parser("convert", help="Convert a document to Markdown")
     c.add_argument(
         "source",
-        help="Path to the input document (PDF, XPS, EPUB, MOBI, FB2, CBZ, or image)",
+        help="A document or a folder of documents (PDF, XPS, EPUB, MOBI, FB2, CBZ, or image)",
     )
     c.add_argument("-o", "--out-dir", default="out", help="Output directory (default: out)")
     c.add_argument(
@@ -31,9 +31,13 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == "convert":
-        result = convert(args.source, model=args.model, dpi=args.dpi, out_dir=args.out_dir)
-        print(f"Wrote {result.markdown_path}")
-        print(f"Assets in {result.assets_dir}")
+        results = convert_path(
+            args.source, model=args.model, dpi=args.dpi, out_dir=args.out_dir
+        )
+        for r in results:
+            print(f"Wrote {r.markdown_path}")
+        if len(results) > 1:
+            print(f"Converted {len(results)} documents to {args.out_dir}/")
     return 0
 
 

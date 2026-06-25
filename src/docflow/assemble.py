@@ -55,6 +55,7 @@ def assemble(
     layouts: list[PageLayout],
     metas: list[PageMeta],
     out_dir: Path,
+    assets_name: str = "assets",
 ) -> tuple[str, list[tuple[int, str]]]:
     meta_by_page = {m.page_index: m for m in metas}
     blocks: list[str] = []
@@ -84,7 +85,7 @@ def assemble(
                 blocks.append(f"*{_clean(el.text)}*")
             elif cat is Category.PICTURE:
                 fig_count += 1
-                rel = Path("assets") / f"page{layout.page_index}_fig{fig_count}.png"
+                rel = Path(assets_name) / f"page{layout.page_index}_fig{fig_count}.png"
                 figures.crop_figure(doc, el, meta, out_dir / rel)
                 blocks.append(f"![Figure]({rel.as_posix()})")
             elif cat is Category.FOOTNOTE:
