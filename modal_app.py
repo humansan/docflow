@@ -61,10 +61,21 @@ def _download_weights() -> None:
     snapshot_download(MODEL_REPO, local_dir=WEIGHTS_DIR)
 
 
-# CUDA-devel base so flash-attn can build from source (cached after the first deploy).
+# Dao AI Lab publishes pre-compiled flash-attn wheels, so install one directly instead of
+# building from source (the source build needs a CUDA-devel toolchain and often OOMs — see
+# https://modal.com/docs/examples/install_flash_attn). The wheel must match our stack:
+# cu12 + torch2.7 + cp312. If the model later fails to load with an "undefined symbol"
+# error, flip cxx11abiFALSE -> cxx11abiTRUE below (the other published variant).
+FLASH_ATTN_WHEEL = (
+    "https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3.post1/"
+    "flash_attn-2.8.3.post1+cu12torch2.7cxx11abiFALSE-cp312-cp312-linux_x86_64.whl"
+)
+
+# torch's pip wheel bundles the CUDA runtime, so a slim base is enough to run on the L4.
 image = (
-    modal.Image.from_registry("nvidia/cuda:12.4.1-devel-ubuntu22.04", add_python="3.12")
-    .pip_install("torch==2.7.0")
+    modal.Image.debian_slim(python_version="3.12")
+    # torchvision must match torch (qwen_vl_utils imports it); 2.7.0 <-> 0.22.0.
+    .pip_install("torch==2.7.0", "torchvision==0.22.0")
     .pip_install(
         "transformers==4.57.6",
         "qwen-vl-utils",
@@ -72,7 +83,7 @@ image = (
         "huggingface_hub",
         "pillow",
     )
-    .pip_install("flash-attn==2.8.0.post2", extra_options="--no-build-isolation")
+    .pip_install(FLASH_ATTN_WHEEL)
     .run_function(_download_weights, volumes={"/weights": weights})
 )
 
