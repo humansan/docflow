@@ -42,7 +42,7 @@ PROMPT = """Please output the layout information from the PDF image, including e
     - Picture: For the 'Picture' category, the text field should be omitted.
     - Formula: Format its text as LaTeX.
     - Table: Format its text as HTML.
-    - All Others (Text, Title, etc.): Format their text as Markdown.
+    - All Others (Text, Title, etc.): Format their text as Markdown. Preserve the visual hierarchy of the page: give titles and section or sub-section headings the matching Markdown heading level (#, ##, ###, ...) according to how prominent they appear, and use **bold** or *italic* to reflect emphasized labels and inline emphasis. Keep list items in Markdown list syntax.
 
 4. Constraints:
     - The output text must be the original text from the image, with no translation.
