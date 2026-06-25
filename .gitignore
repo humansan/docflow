@@ -12,3 +12,4 @@ __pycache__/
 # Docflow outputs & local sample PDFs
 out/
 samples/*.pdf
+input/

@@ -1,7 +1,8 @@
-"""Top-level orchestrator: PDF in, Markdown out.
+"""Top-level orchestrator: document in, Markdown out.
 
-Ties together preprocessing, the layout model (behind the ``LayoutModel`` seam),
-Markdown assembly, and TOC generation. Holds no infrastructure — just a function.
+Accepts any format PyMuPDF can open (PDF, XPS, EPUB, MOBI, FB2, CBZ, images). Ties
+together preprocessing, the layout model (behind the ``LayoutModel`` seam), Markdown
+assembly, and TOC generation. Holds no infrastructure — just a function.
 """
 
 from __future__ import annotations
@@ -26,19 +27,19 @@ class ConversionResult:
 
 
 def convert(
-    pdf_path: str | Path,
+    source: str | Path,
     *,
     model: str | LayoutModel = "mock",
     dpi: int = DEFAULT_DPI,
     out_dir: str | Path = "out",
 ) -> ConversionResult:
-    pdf_path = Path(pdf_path)
+    source = Path(source)
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     layout_model = get_model(model) if isinstance(model, str) else model
 
-    doc = fitz.open(pdf_path)
+    doc = fitz.open(source)
     try:
         pages, metas = preprocess(doc, dpi)
         layouts = layout_model.parse(pages)

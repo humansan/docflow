@@ -1,9 +1,11 @@
-"""PyMuPDF preprocessing: render PDF pages to images and capture page geometry.
+"""PyMuPDF preprocessing: render document pages to images and capture geometry.
 
-This is the only place we rasterize pages. The resulting :class:`PageImage`
-objects are what a :class:`~docflow.models.base.LayoutModel` sees; the
-:class:`PageMeta` objects carry the pixel->point scale that figure cropping
-needs to map a model's pixel bbox back onto the original PDF.
+Works for any format PyMuPDF can open — PDF, XPS, EPUB, MOBI, FB2, CBZ, and image
+files — since everything downstream operates on rendered page images. This is the
+only place we rasterize pages. The resulting :class:`PageImage` objects are what a
+:class:`~docflow.models.base.LayoutModel` sees; the :class:`PageMeta` objects carry
+the pixel->point scale that figure cropping needs to map a model's pixel bbox back
+onto the source page.
 """
 
 from __future__ import annotations
@@ -38,6 +40,11 @@ class PageMeta:
 def preprocess(
     doc: fitz.Document, dpi: int = DEFAULT_DPI
 ) -> tuple[list[PageImage], list[PageMeta]]:
+    # Reflowable formats (EPUB, MOBI, FB2) carry no intrinsic page size; give them
+    # a standard one so pagination and page geometry are well-defined before render.
+    if doc.is_reflowable:
+        doc.layout(width=612, height=792, fontsize=11)
+
     pages: list[PageImage] = []
     metas: list[PageMeta] = []
     for i, page in enumerate(doc):

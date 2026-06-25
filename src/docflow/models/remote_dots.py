@@ -42,6 +42,17 @@ class RemoteDotsModel:
                 data={"page_index": str(p.page_index)},
                 timeout=self.timeout,
             )
-            resp.raise_for_status()
+            if not resp.ok:
+                # Surface the server-side error/traceback instead of a bare status.
+                detail = resp.text
+                try:
+                    payload = resp.json()
+                    detail = payload.get("traceback") or payload.get("error") or detail
+                except ValueError:
+                    pass
+                raise RuntimeError(
+                    f"dots server returned {resp.status_code} for page "
+                    f"{p.page_index}:\n{detail}"
+                )
             results.append(PageLayout.from_dict(resp.json()))
         return results

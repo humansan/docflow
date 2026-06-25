@@ -13,8 +13,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="docflow")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    c = sub.add_parser("convert", help="Convert a PDF to Markdown")
-    c.add_argument("pdf", help="Path to the input PDF")
+    c = sub.add_parser("convert", help="Convert a document to Markdown")
+    c.add_argument(
+        "source",
+        help="Path to the input document (PDF, XPS, EPUB, MOBI, FB2, CBZ, or image)",
+    )
     c.add_argument("-o", "--out-dir", default="out", help="Output directory (default: out)")
     c.add_argument(
         "--model",
@@ -27,7 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == "convert":
-        result = convert(args.pdf, model=args.model, dpi=args.dpi, out_dir=args.out_dir)
+        result = convert(args.source, model=args.model, dpi=args.dpi, out_dir=args.out_dir)
         print(f"Wrote {result.markdown_path}")
         print(f"Assets in {result.assets_dir}")
     return 0
