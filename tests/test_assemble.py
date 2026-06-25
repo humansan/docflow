@@ -47,3 +47,24 @@ def test_assemble_maps_every_category(tiny_pdf, tmp_path):
     assert (tmp_path / "assets" / "page0_fig1.png").exists()
 
     assert headings == [(1, "Doc Title"), (2, "Section One")]
+
+
+def test_assemble_does_not_double_heading_prefix(tiny_pdf, tmp_path):
+    """dots.mocr puts '## ' in the text itself; we must not prepend another."""
+    layout = PageLayout(
+        page_index=0,
+        image_width=1275,
+        image_height=1650,
+        elements=[
+            LayoutElement(Category.SECTION_HEADER, (100, 50, 1100, 120), "## PROJECTS"),
+            LayoutElement(Category.TITLE, (100, 150, 1100, 220), "Plain Title"),
+        ],
+    )
+    doc = fitz.open(tiny_pdf)
+    body, headings = assemble(doc, [layout], [PageMeta(0, 612, 792, dpi=150)], tmp_path)
+    doc.close()
+
+    assert "## PROJECTS" in body
+    assert "## ## PROJECTS" not in body
+    assert "# Plain Title" in body  # no model prefix -> category default (level 1)
+    assert headings == [(2, "PROJECTS"), (1, "Plain Title")]

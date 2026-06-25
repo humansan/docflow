@@ -8,6 +8,7 @@ dropped; footnotes are gathered and appended at the end.
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import fitz  # PyMuPDF
@@ -19,10 +20,25 @@ from .preprocess import PageMeta
 HEADING_LEVELS = {Category.TITLE: 1, Category.SECTION_HEADER: 2}
 DROP = {Category.PAGE_HEADER, Category.PAGE_FOOTER}
 _LIST_MARKERS = ("-", "*", "+")
+_HEADING_RE = re.compile(r"^\s*(#{1,6})\s+(.*)$", re.DOTALL)
 
 
 def _clean(text: str | None) -> str:
     return (text or "").strip()
+
+
+def _heading(raw: str | None, default_level: int) -> tuple[int, str]:
+    """Resolve a heading's level and text.
+
+    dots.mocr emits Markdown directly, so a heading element's text often already
+    starts with its own ``#``/``##``. Trust those (so we don't produce ``## ## Title``),
+    falling back to the category's default level only when no prefix is present.
+    """
+    text = _clean(raw)
+    m = _HEADING_RE.match(text)
+    if m:
+        return len(m.group(1)), m.group(2).strip()
+    return default_level, text
 
 
 def _as_list_item(text: str) -> str:
@@ -53,8 +69,7 @@ def assemble(
             if cat in DROP:
                 continue
             if cat in HEADING_LEVELS:
-                level = HEADING_LEVELS[cat]
-                text = _clean(el.text)
+                level, text = _heading(el.text, HEADING_LEVELS[cat])
                 blocks.append(f"{'#' * level} {text}")
                 headings.append((level, text))
             elif cat is Category.TEXT:
