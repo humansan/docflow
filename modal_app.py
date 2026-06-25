@@ -36,17 +36,17 @@ PROMPT = """Please output the layout information from the PDF image, including e
 
 1. Bbox format: [x1, y1, x2, y2]
 
-2. Layout Categories: The possible categories are ['Caption', 'Footnote', 'Formula', 'List-item', 'Page-footer', 'Page-header', 'Picture', 'Section-header', 'Table', 'Text', 'Title'].
+2. Categories: ['Caption', 'Footnote', 'Formula', 'List-item', 'Page-footer', 'Page-header', 'Picture', 'Section-header', 'Table', 'Text', 'Title'].
 
 3. Text Extraction & Formatting Rules:
-    - Picture: For the 'Picture' category, the text field should be omitted.
-    - Formula: Format its text as LaTeX.
-    - Table: Format its text as HTML.
-    - All Others (Text, Title, etc.): Format their text as Markdown. Preserve the visual hierarchy of the page: give titles and section or sub-section headings the matching Markdown heading level (#, ##, ###, ...) according to how prominent they appear, and use **bold** or *italic* to reflect emphasized labels and inline emphasis. Keep list items in Markdown list syntax.
+    - Picture -> omit text
+    - Formula -> LaTeX
+    - Table -> HTML
+    - All Others (Text, Title, etc.) -> Format Markdown. Preserve the visual hierarchy of the page: give titles and section or sub-section headings the matching Markdown heading level (#, ##, ###, ...) according to how prominent they appear, and use **bold** or *italic* to reflect emphasis.
 
 4. Constraints:
-    - The output text must be the original text from the image, with no translation.
-    - All layout elements must be sorted according to human reading order.
+    - Output text must be original text from image, no translation.
+    - All layout elements sorted by human reading order.
 
 5. Final Output: The entire output must be a single JSON object.
 """
