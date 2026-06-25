@@ -1,3 +1,14 @@
 PROJECT_PLANNING.md
 .claude/
 .docs/
+
+# Python / uv
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# Docflow outputs & local sample PDFs
+out/
+samples/*.pdf
