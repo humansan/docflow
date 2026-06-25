@@ -22,8 +22,9 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument(
         "--model",
         default="mock",
-        choices=["mock", "dots"],
-        help="Layout model: 'mock' (offline) or 'dots' (remote dots.mocr server)",
+        choices=["mock", "dots", "modal"],
+        help="Layout model: 'mock' (offline), 'dots' (Colab dots.mocr server), "
+        "or 'modal' (deployed Modal GPU function)",
     )
     c.add_argument("--dpi", type=int, default=DEFAULT_DPI, help=f"Render DPI (default: {DEFAULT_DPI})")
 
