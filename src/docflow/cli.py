@@ -31,13 +31,14 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == "convert":
-        results = convert_path(
+        count = 0
+        for r in convert_path(
             args.source, model=args.model, dpi=args.dpi, out_dir=args.out_dir
-        )
-        for r in results:
-            print(f"Wrote {r.markdown_path}")
-        if len(results) > 1:
-            print(f"Converted {len(results)} documents to {args.out_dir}/")
+        ):
+            print(f"Wrote {r.markdown_path}")  # printed as each file finishes
+            count += 1
+        if count > 1:
+            print(f"Converted {count} documents to {args.out_dir}/")
     return 0
 
 

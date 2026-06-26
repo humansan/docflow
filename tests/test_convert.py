@@ -62,7 +62,7 @@ def test_convert_path_iterates_folder(tiny_pdf, tmp_path):
     (folder / "notes.txt").write_text("not a document")  # must be ignored
 
     out = tmp_path / "out"
-    results = convert_path(folder, model="mock", out_dir=out)
+    results = list(convert_path(folder, model="mock", out_dir=out))
 
     assert len(results) == 2  # .txt skipped
     assert sorted(r.markdown_path.name for r in results) == ["a_out.md", "b_out.md"]
@@ -74,6 +74,6 @@ def test_convert_path_iterates_folder(tiny_pdf, tmp_path):
 
 
 def test_convert_path_single_file_returns_one(tiny_pdf, tmp_path):
-    results = convert_path(tiny_pdf, model="mock", out_dir=tmp_path / "out")
+    results = list(convert_path(tiny_pdf, model="mock", out_dir=tmp_path / "out"))
     assert len(results) == 1
     assert results[0].markdown_path.name == "tiny_out.md"

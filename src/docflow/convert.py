@@ -7,6 +7,7 @@ assembly, and TOC generation. Holds no infrastructure — just a function.
 
 from __future__ import annotations
 
+from collections.abc import Iterator
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -75,11 +76,17 @@ def convert_path(
     model: str | LayoutModel = "mock",
     dpi: int = DEFAULT_DPI,
     out_dir: str | Path = "out",
-) -> list[ConversionResult]:
+) -> Iterator[ConversionResult]:
     """Convert a single document, or every supported document in a folder.
 
-    Returns one :class:`ConversionResult` per file. The layout model is resolved once
-    and reused across all files (one Modal/Colab connection for the whole batch).
+    Yields one :class:`ConversionResult` per file, *as each file finishes* — by which
+    point that file's ``.md`` and figure crops are already on disk. Streaming the
+    results this way lets a caller report progress incrementally instead of waiting for
+    the whole batch to complete. The layout model is resolved once and reused across all
+    files (one Modal/Colab connection for the whole batch).
+
+    Being a generator, the body (including the empty-folder check below) runs lazily on
+    first iteration; wrap in ``list(...)`` if you need every result up front.
     """
     source = Path(source)
     layout_model = get_model(model) if isinstance(model, str) else model
@@ -95,4 +102,5 @@ def convert_path(
     else:
         files = [source]
 
-    return [convert(f, model=layout_model, dpi=dpi, out_dir=out_dir) for f in files]
+    for f in files:
+        yield convert(f, model=layout_model, dpi=dpi, out_dir=out_dir)
