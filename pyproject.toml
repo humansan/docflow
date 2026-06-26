@@ -9,6 +9,9 @@ dependencies = [
     "pillow>=10.0",
     "requests>=2.31",
     "modal>=0.64",
+    "fastapi>=0.138.1",
+    "uvicorn[standard]>=0.49.0",
+    "python-multipart>=0.0.32",
 ]
 
 [project.scripts]
@@ -16,6 +19,7 @@ docflow = "docflow.cli:main"
 
 [dependency-groups]
 dev = [
+    "httpx>=0.28.1",
     "pytest>=8.0",
 ]
 
