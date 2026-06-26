@@ -16,4 +16,8 @@ def get_model(name: str) -> LayoutModel:
         from .remote_dots import RemoteDotsModel
 
         return RemoteDotsModel()
-    raise ValueError(f"Unknown model {name!r} (expected 'mock' or 'dots')")
+    if name == "modal":
+        from .modal_dots import ModalDotsModel
+
+        return ModalDotsModel()
+    raise ValueError(f"Unknown model {name!r} (expected 'mock', 'dots', or 'modal')")

@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import sys
 
-from .convert import convert
+from .convert import convert_path
 from .preprocess import DEFAULT_DPI
 
 
@@ -16,23 +16,29 @@ def main(argv: list[str] | None = None) -> int:
     c = sub.add_parser("convert", help="Convert a document to Markdown")
     c.add_argument(
         "source",
-        help="Path to the input document (PDF, XPS, EPUB, MOBI, FB2, CBZ, or image)",
+        help="A document or a folder of documents (PDF, XPS, EPUB, MOBI, FB2, CBZ, or image)",
     )
     c.add_argument("-o", "--out-dir", default="out", help="Output directory (default: out)")
     c.add_argument(
         "--model",
         default="mock",
-        choices=["mock", "dots"],
-        help="Layout model: 'mock' (offline) or 'dots' (remote dots.mocr server)",
+        choices=["mock", "dots", "modal"],
+        help="Layout model: 'mock' (offline), 'dots' (Colab dots.mocr server), "
+        "or 'modal' (deployed Modal GPU function)",
     )
     c.add_argument("--dpi", type=int, default=DEFAULT_DPI, help=f"Render DPI (default: {DEFAULT_DPI})")
 
     args = parser.parse_args(argv)
 
     if args.command == "convert":
-        result = convert(args.source, model=args.model, dpi=args.dpi, out_dir=args.out_dir)
-        print(f"Wrote {result.markdown_path}")
-        print(f"Assets in {result.assets_dir}")
+        count = 0
+        for r in convert_path(
+            args.source, model=args.model, dpi=args.dpi, out_dir=args.out_dir
+        ):
+            print(f"Wrote {r.markdown_path}")  # printed as each file finishes
+            count += 1
+        if count > 1:
+            print(f"Converted {count} documents to {args.out_dir}/")
     return 0
 
 

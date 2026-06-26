@@ -1,6 +1,9 @@
 PROJECT_PLANNING.md
 .claude/
+.gemini/
 .docs/
+.codegraph/
+GEMINI.md
 
 # Python / uv
 .venv/

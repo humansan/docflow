@@ -8,6 +8,7 @@ dependencies = [
     "pymupdf>=1.24",
     "pillow>=10.0",
     "requests>=2.31",
+    "modal>=0.64",
 ]
 
 [project.scripts]
